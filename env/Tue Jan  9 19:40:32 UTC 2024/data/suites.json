@@ -1,0 +1,35 @@
+{
+  "uid" : "98d3104e051c652961429bf95fa0b5d6",
+  "children" : [ {
+    "name" : "org.example.MainTest",
+    "children" : [ {
+      "name" : "test()",
+      "uid" : "78b96b5e24bfd35e",
+      "parentUid" : "5c56a87eed88a821db81d682a4c9900e",
+      "status" : "passed",
+      "time" : {
+        "start" : 1704829228413,
+        "stop" : 1704829228431,
+        "duration" : 18
+      },
+      "flaky" : false,
+      "newFailed" : false,
+      "parameters" : [ ]
+    }, {
+      "name" : "test2()",
+      "uid" : "6142aaa530c0d141",
+      "parentUid" : "5c56a87eed88a821db81d682a4c9900e",
+      "status" : "passed",
+      "time" : {
+        "start" : 1704829228486,
+        "stop" : 1704829228490,
+        "duration" : 4
+      },
+      "flaky" : false,
+      "newFailed" : false,
+      "parameters" : [ ]
+    } ],
+    "uid" : "5c56a87eed88a821db81d682a4c9900e"
+  } ],
+  "name" : "suites"
+}
