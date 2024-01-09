@@ -52,17 +52,17 @@ jobs:
       - name: Create new report directory
         run: |
           cp -r target/site/allure-maven-plugin/history/* gh-pages/history/${ENVIRONMENT}
-          export NEW_TEST_RUN_DIR="gh-pages/$REPORT_DATE/${ENVIRONMENT}"
+          export NEW_TEST_RUN_DIR="gh-pages/${ENVIRONMENT}/$REPORT_DATE"
           mkdir -p "$NEW_TEST_RUN_DIR"
           cp -r target/site/allure-maven-plugin/* "$NEW_TEST_RUN_DIR"
       - name: Update environment index.html
         run: |
-          echo "<!DOCTYPE html><meta charset=\"utf-8\"><meta http-equiv=\"refresh\" content=\"0; URL=https://EduardDranca.github.io/report/$REPORT_DATE/${ENVIRONMENT}/\">
+          echo "<!DOCTYPE html><meta charset=\"utf-8\"><meta http-equiv=\"refresh\" content=\"0; URL=https://EduardDranca.github.io/report/${ENVIRONMENT}/$REPORT_DATE/\">
           <meta http-equiv=\"Pragma\" content=\"no-cache\"><meta http-equiv=\"Expires\" content=\"0\">" > gh-pages/${ENVIRONMENT}/index.html
       - name: Update main index.html
         run: |
           if ! grep -q "${ENVIRONMENT}" gh-pages/index.html; then
-            echo "<a href=\"$REPORT_DATE/${ENVIRONMENT}/\">${ENVIRONMENT}</a><br>" >> gh-pages/index.html
+            echo "<a href=\"${ENVIRONMENT}/$REPORT_DATE/\">${ENVIRONMENT}</a><br>" >> gh-pages/index.html
           fi
       - name: Create new report commit
         run: |
