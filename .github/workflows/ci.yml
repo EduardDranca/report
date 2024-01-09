@@ -38,10 +38,10 @@ jobs:
           mvn --batch-mode test
       - name: Copy history
         run: |
-          mkdir -p target/allure-results/history/${ENVIRONMENT}
+          mkdir -p target/allure-results/history
           mkdir -p gh-pages/history/${ENVIRONMENT}
           if [ "$(ls -A gh-pages/history/${ENVIRONMENT})" ]; then
-            cp -r gh-pages/history/${ENVIRONMENT}/* target/allure-results/history/${ENVIRONMENT}
+            cp -r gh-pages/history/${ENVIRONMENT}/* target/allure-results/history
           fi
       - name: Generate report
         run: |
@@ -51,7 +51,7 @@ jobs:
           echo "REPORT_DATE=$(date)" >> $GITHUB_ENV
       - name: Create new report directory
         run: |
-          cp -r target/site/allure-maven-plugin/history/${ENVIRONMENT}/* gh-pages/history/${ENVIRONMENT}
+          cp -r target/site/allure-maven-plugin/history/* gh-pages/history/${ENVIRONMENT}
           export NEW_TEST_RUN_DIR="gh-pages/$REPORT_DATE/${ENVIRONMENT}"
           mkdir -p "$NEW_TEST_RUN_DIR"
           cp -r target/site/allure-maven-plugin/* "$NEW_TEST_RUN_DIR"
