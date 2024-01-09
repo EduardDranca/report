@@ -1,0 +1,57 @@
+{
+  "uid" : "55fc03e6b5c03b9d",
+  "name" : "test2()",
+  "fullName" : "org.example.MainTest.test2",
+  "historyId" : "1791f47cd666e8702076b31f1276c4ff",
+  "time" : {
+    "start" : 1704829484285,
+    "stop" : 1704829484289,
+    "duration" : 4
+  },
+  "description" : "",
+  "status" : "passed",
+  "flaky" : false,
+  "newFailed" : false,
+  "beforeStages" : [ ],
+  "afterStages" : [ ],
+  "labels" : [ {
+    "name" : "host",
+    "value" : "fv-az1052-179"
+  }, {
+    "name" : "thread",
+    "value" : "1876@fv-az1052-179.main(1)"
+  }, {
+    "name" : "framework",
+    "value" : "junit-platform"
+  }, {
+    "name" : "language",
+    "value" : "java"
+  }, {
+    "name" : "package",
+    "value" : "org.example.MainTest"
+  }, {
+    "name" : "testClass",
+    "value" : "org.example.MainTest"
+  }, {
+    "name" : "testMethod",
+    "value" : "test2"
+  }, {
+    "name" : "suite",
+    "value" : "org.example.MainTest"
+  }, {
+    "name" : "resultFormat",
+    "value" : "allure2"
+  } ],
+  "parameters" : [ ],
+  "links" : [ ],
+  "hidden" : false,
+  "retry" : false,
+  "extra" : {
+    "severity" : "normal",
+    "retries" : [ ],
+    "categories" : [ ],
+    "tags" : [ ]
+  },
+  "source" : "55fc03e6b5c03b9d.json",
+  "parameterValues" : [ ]
+}
