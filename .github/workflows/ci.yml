@@ -40,7 +40,9 @@ jobs:
         run: |
           mkdir -p target/allure-results/history/${ENVIRONMENT}
           mkdir -p gh-pages/history/${ENVIRONMENT}
-          cp -r gh-pages/history/${ENVIRONMENT}/* target/allure-results/history/${ENVIRONMENT}
+          if [ "$(ls -A gh-pages/history/${ENVIRONMENT})" ]; then
+            cp -r gh-pages/history/${ENVIRONMENT}/* target/allure-results/history/${ENVIRONMENT}
+          fi
       - name: Generate report
         run: |
           mvn allure:report
