@@ -72,4 +72,4 @@ jobs:
           git config --global user.name ${{ secrets.user_name}}
           git add *
           git commit -m "Update reports for ${ENVIRONMENT} environment on $REPORT_DATE"
-          git push
+          git push -u origin gh-pages
