@@ -1,11 +1,24 @@
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment for the test run'
+        required: true
+  push:
+    branches:
+      - main
+
 jobs:
   allure:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v3
       - name: Checkout gh pages
         uses: actions/checkout@v3
+        if: always()
+        continue-on-error: true
         with:
           path: gh-pages
           ref: gh-pages
@@ -14,16 +27,46 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '11'
+          cache: 'maven'
       - name: Run maven tests
+        env:
+          ENVIRONMENT: ${{ github.event.inputs.environment || 'default' }}
+          var1: ${{ vars.var1 }}
+          var2: ${{ vars.var2 }}
         run: |
           mvn --batch-mode test
-      - name: Generate allure report
+      - name: Copy history
+        run: |
+          mkdir target/allure-results/history
+          mkdir -p gh-pages/${{ github.event.inputs.environment }}/history
+          cp -r gh-pages/${{ github.event.inputs.environment }}/history target/allure-results
+      - name: Generate report
         run: |
           mvn allure:report
-      - name: Generate gh page
-        uses: simple-elf/allure-report-action@master
-        with:
-          allure_results: target/allure-results
-          gh_pages: gh-pages
-          allure_report: allure-report
-          allure_history: allure-history
+      - name: Get date
+        run: |
+          echo "REPORT_DATE=$(date)" >> $GITHUB_ENV
+      - name: Create new report directory
+        run: |
+          cp target/site/allure-maven-plugin/history/* gh-pages/${{ github.event.inputs.environment }}/history
+          export NEW_TEST_RUN_DIR="gh-pages/${{ github.event.inputs.environment }}/$REPORT_DATE"
+          mkdir -p "$NEW_TEST_RUN_DIR"
+          cp -r target/site/allure-maven-plugin/* "$NEW_TEST_RUN_DIR"
+      - name: Update environment index.html
+        run: |
+          echo "<!DOCTYPE html><meta charset=\"utf-8\"><meta http-equiv=\"refresh\" content=\"0; URL=https://EduardDranca.github.io/report/${{ github.event.inputs.environment }}/$REPORT_DATE/\">
+          <meta http-equiv=\"Pragma\" content=\"no-cache\"><meta http-equiv=\"Expires\" content=\"0\">" > gh-pages/${{ github.event.inputs.environment }}/index.html
+      - name: Update main index.html
+        run: |
+          if ! grep -q "${{ github.event.inputs.environment }}" gh-pages/index.html; then
+            echo "<a href=\"${{ github.event.inputs.environment }}/\">${{ github.event.inputs.environment }}</a><br>" >> gh-pages/index.html
+          fi
+      - name: Create new report commit
+        run: |
+          cd gh-pages
+          ls
+          git config --global user.email ${{ secrets.email }}
+          git config --global user.name ${{ secrets.user_name}}
+          git add *
+          git commit -m "Update reports for ${{ github.event.inputs.environment }} environment on $REPORT_DATE"
+          git push
